@@ -8,12 +8,79 @@ Arraylist::~Arraylist() {
 	clear();
 }
 
-void Arraylist::add(int element) {}
-void Arraylist::add(int index, int element) {}
-void Arraylist::addAll(int* element, int size) {}
+void Arraylist::add(int element) {
+	if (isEmpty()) {
+		size = 1;
+		list = new int[size];
+		list[0] = element;
+	}
+	else {
+		int* temp = new int[size + 1];
+		for (int i = 0; i < size; i++) {
+			temp[i] = list[i];
+		}
+
+		temp[size] = element;
+		delete[] list;
+		list = temp;
+		size++;
+	}
+}
+void Arraylist::add(int index, int element) {
+	if (isEmpty()) {
+		size = 1;
+		list = new int[size];
+		list[0] = element;
+	}
+	else if (!isEmpty() || index < 0 || index >= size) {
+		return;
+	}
+	else {
+		size++;
+		int* temp = new int[size];
+		for (int i = 0, j = 0; j < size; j++) {
+			if (i != index) {
+				temp[j] = list[i];
+				i++;
+			}
+			else {
+				temp[j] = element;
+			}
+		}
+
+		temp[size] = element;
+		delete[] list;
+		list = temp;
+		size++;
+	}
+}
+void Arraylist::addAll(int* element, int size) {
+	for (int i = 0; i < size; i++) {
+		add(element);
+	}
+}
+
 //Arraylist:: addAll(int index, int* elemnt, int size);
-void Arraylist::remove() {}
-void Arraylist::remove(int index) {}
+
+void Arraylist::remove() {
+	remove(size - 1);
+}
+void Arraylist::remove(int index) {
+	if (!isEmpty()) {
+		size--;
+		int* temp = new int[size];
+		for (int i = 0, j = 0; i < size; i++) {
+			if (i != index) {
+				temp[j] = list[i];
+				j++;
+			}
+			
+		}
+
+		delete[] list;
+		list = temp;
+	}
+}
 
 void Arraylist::clear() {
 	if (list != nullptr) {
